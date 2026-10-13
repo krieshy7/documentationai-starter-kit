@@ -1,0 +1,152 @@
+---
+title: Authentication & Security
+description: Details on securing access, authentication methods, and compliance features for enterprise deployments.
+---
+
+## Overview
+
+Secure your Percepteye AI integration with robust authentication and enterprise-grade security features. You authenticate API requests using API keys or OAuth tokens. Percepteye enforces permissions at the environment level, supports cyber-aware fine-tuning for resilient models, and ensures compliance through continuous enforcement.
+
+<Callout kind="alert">
+  Always store your API keys securely. Never expose them in client-side code or public repositories.
+</Callout>
+
+## Authentication Methods
+
+Percepteye supports two primary methods: API keys for simple access and OAuth 2.0 for delegated permissions.
+
+<Tabs>
+  <Tab title="API Keys" icon="key">
+    Generate an API key from your dashboard at `https://dashboard.example.com/settings/api-keys`.
+
+    Use the key in the `Authorization` header for all requests.
+
+    <ParamField header="Authorization" param-type="string" required="true">
+      Bearer token format: `Bearer YOUR_API_KEY`.
+    </ParamField>
+
+    <CodeGroup tabs="JavaScript,Python,cURL">
+      ```javascript
+      const response = await fetch('https://api.example.com/v1/agents/scout', {
+        headers: {
+          'Authorization': 'Bearer YOUR_API_KEY',
+          'Content-Type': 'application/json'
+        }
+      });
+      ```
+      ```python
+      import requests
+
+      headers = {
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json'
+      }
+      response = requests.get('https://api.example.com/v1/agents/scout', headers=headers)
+      ```
+      ```bash
+      curl -X GET https://api.example.com/v1/agents/scout \
+        -H "Authorization: Bearer YOUR_API_KEY" \
+        -H "Content-Type: application/json"
+      ```
+    </CodeGroup>
+  </Tab>
+
+  <Tab title="OAuth 2.0" icon="shield">
+    For production environments, use OAuth 2.0 with client credentials flow.
+
+    <Steps>
+      <Step title="Create OAuth App" icon="settings">
+        Navigate to `https://dashboard.example.com/oauth/apps` and register your app.
+      </Step>
+      <Step title="Obtain Token" icon="download">
+        Exchange credentials for a token.
+
+        ```bash
+        curl -X POST https://auth.example.com/oauth/token \
+          -d "grant_type=client_credentials" \
+          -d "client_id=YOUR_CLIENT_ID" \
+          -d "client_secret=YOUR_CLIENT_SECRET"
+        ```
+      </Step>
+      <Step title="Use Token" icon="play">
+        Include the access token in requests.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Managing Permissions
+
+Control access with environment-based permissions. Assign roles like Admin, Developer, or Viewer to users or API keys.
+
+| Role      | Scout Access | Compass Access | Maestro Access | Fine-Tuning |
+|-----------|--------------|----------------|---------------|-------------|
+| Admin     | Full        | Full          | Full         | Full       |
+| Developer | Full        | Read/Write    | Execute      | Limited    |
+| Viewer    | Read        | Read          | None         | None       |
+
+<Expandable title="Advanced Permission Scopes" default-open="false">
+  Use granular scopes like `agents:scout:read` or `fine-tune:cyber-aware:execute` when creating API keys.
+</Expandable>
+
+## Cyber-Aware Fine-Tuning and Compliance
+
+Percepteye's patent-pending cyber-aware fine-tuning embeds security and compliance as learned behaviors in your AI agents.
+
+<Columns cols={2}>
+  <Card title="Cyber-Aware Fine-Tuning" icon="shield" href="#">
+    Automatically simulates adversarial attacks during training to build resilient models.
+  </Card>
+  <Card title="Compliance Enforcement" icon="check-circle" href="#">
+    Ensures GDPR, HIPAA, and SOC 2 compliance through continuous validation loops.
+  </Card>
+  <Card title="Resilience Features" icon="zap" href="#">
+    Models recover from prompt injections and data poisoning autonomously.
+  </Card>
+  <Card title="Audit Logs" icon="book-open" href="#">
+    Track all fine-tuning runs and access events for full traceability.
+  </Card>
+</Columns>
+
+## API Request Security
+
+All requests to `https://api.example.com` require authentication. Here's an example secure request and response.
+
+<Request tabs="JavaScript,cURL" show-lines="true">
+  ```javascript
+  const response = await fetch('https://api.example.com/v1/agents/compass/workflows', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer YOUR_API_KEY',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ workflow: 'map-systems' })
+  });
+  ```
+  ```bash
+  curl -X POST https://api.example.com/v1/agents/compass/workflows \
+    -H "Authorization: Bearer YOUR_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"workflow": "map-systems"}'
+  ```
+</Request>
+
+<Response tabs="200,401">
+  ```json
+  {
+    "id": "wf_123456",
+    "status": "created",
+    "workflows": ["system-map", "candidate-library"]
+  }
+  ```
+  ```json
+  {
+    "error": "Unauthorized",
+    "message": "Invalid or missing Authorization header"
+  }
+  ```
+</Response>
+
+<Callout kind="tip">
+  Rotate API keys regularly and use short-lived OAuth tokens for enhanced security.
+</Callout>

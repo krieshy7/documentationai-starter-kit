@@ -1,0 +1,149 @@
+---
+title: SDK Installation
+description: Installation guide for the Agent Flywheel SDK, including dependencies and environment setup.
+---
+
+## Prerequisites
+
+Before installing the Agent Flywheel SDK, ensure your system meets these requirements.
+
+<Callout kind="info">
+
+- Python `>=3.10` (for Python SDK)
+- Node.js `>=18` and npm `>=9` (for JavaScript SDK)
+- macOS, Linux, or Windows with WSL
+- Access to your Percepteye AI account for the API key
+
+Obtain your API key from the [dashboard](https://dashboard.example.com).
+
+</Callout>
+
+## Installation Steps
+
+Follow these steps to install the SDK using your preferred package manager.
+
+<Steps>
+  <Step title="Choose Package Manager" icon="package">
+    Select Python or JavaScript based on your stack.
+  </Step>
+  <Step title="Install SDK" icon="download">
+    Use the commands below for your platform and language.
+  </Step>
+  <Step title="Set Environment Variables" icon="settings">
+    Configure your `{API_KEY}` and other required variables.
+  </Step>
+</Steps>
+
+## Platform-Specific Installation
+
+Install the SDK with platform-optimized commands.
+
+<Tabs>
+  <Tab title="macOS/Linux" icon="apple">
+    
+    **Python:**
+    
+````python
+pip install percepteye-sdk
+````
+
+    **JavaScript:**
+    
+````bash
+npm install percepteye-sdk
+````
+
+  </Tab>
+  <Tab title="Windows (WSL)" icon="monitor">
+    
+    Ensure WSL is enabled, then use macOS/Linux commands above.
+    
+    <Callout kind="tip">
+      Install WSL2 for best compatibility: `wsl --install`.
+    </Callout>
+
+  </Tab>
+</Tabs>
+
+## Environment Variables
+
+Set these variables in your shell profile (`.bashrc`, `.zshrc`) or environment.
+
+```bash
+export PERCEPTEYE_API_KEY="your-api-key-here"
+export PERCEPTEYE_WEBHOOK_URL="https://your-webhook-url.com/webhook"
+export PERCEPTEYE_ENVIRONMENT="production"
+```
+
+Reload your shell:
+
+```bash
+source ~/.bashrc  # or ~/.zshrc
+```
+
+<Callout kind="alert">
+  Never commit real API keys to version control. Use environment variables or secret managers.
+</Callout>
+
+## Verify Installation
+
+Test the installation with a simple import and version check.
+
+<CodeGroup tabs="Python,JavaScript">
+  ```python
+import percepteye
+print(percepteye.__version__)  # Should print latest version, e.g., 1.2.0
+  ```
+  ```javascript
+const percepteye = require('percepteye-sdk');
+console.log(percepteye.version);  // Should print latest version, e.g., 1.2.0
+  ```
+</CodeGroup>
+
+## First SDK Usage
+
+Initialize the SDK and make your first call.
+
+```python
+import os
+from percepteye import Client
+
+client = Client(api_key=os.getenv("PERCEPTEYE_API_KEY"))
+
+# List available agents (Scout, Compass, Maestro)
+agents = client.agents.list()
+print(agents)
+```
+
+<Callout kind="success">
+  Success! Your SDK is ready. The `{agents}` response includes details on Scout for discovery, Compass for training, and Maestro for deployment.
+</Callout>
+
+## Next Steps
+
+<Columns cols={2}>
+  <Card title="Quickstart" icon="book-open" href="/quickstart">
+    Run your first agent simulation.
+  </Card>
+  <Card title="Authentication" icon="shield" href="/authentication">
+    Secure your API calls.
+  </Card>
+  <Card title="Agents Guide" icon="zap" href="/agents">
+    Explore Scout, Compass, and Maestro.
+  </Card>
+  <Card title="Configuration" icon="settings" href="/configuration">
+    Advanced SDK options.
+  </Card>
+</Columns>
+
+<Expandable title="Troubleshooting" default-open="false">
+  
+Common issues:
+
+| Issue | Solution |
+|-------|----------|
+| `ModuleNotFoundError` | Run `pip install --upgrade percepteye-sdk` |
+| Invalid `{API_KEY}` | Verify key in dashboard.example.com |
+| Network errors | Check firewall and proxy settings |
+
+</Expandable>

@@ -1,0 +1,163 @@
+---
+title: Changelog
+description: Version history with recent updates, improvements, and release notes for Percepteye AI.
+---
+
+## Recent Releases
+
+<Update label="2024-12-05" description="v1.3.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Introduced Compass agent with automated workflow mapping from your existing systems.
+- Added real-time observability dashboard for Scout agent discovery.
+- Agent Flywheel SDK now supports seamless model upgrades without downtime.
+
+## Improvements
+
+- Enhanced Maestro's experiment evaluation with 20% faster benchmarking.
+- Optimized inference costs for fine-tuned models by up to 30%.
+
+## Bug Fixes
+
+- Fixed intermittent failures in continuous learning loops.
+- Resolved compatibility issues with popular serving stacks.
+
+</Update>
+
+<Update label="2024-11-20" description="v1.2.0" tags={["feature", "bugfix"]}>
+
+## New Features
+
+- Launched Scout for system discovery and candidate workflow generation.
+- Integrated patent-pending cyber-aware fine-tuning in Maestro.
+
+## Improvements
+
+- Lightweight SDK now includes RL feedback loops for production agents.
+
+## Bug Fixes
+
+- Patched edge cases in data cleaning for Compass workflows.
+- Improved error handling for webhook deliveries.
+
+</Update>
+
+<Update label="2024-11-01" description="v1.1.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Full Agent Flywheel loop with Scout, Compass, and Maestro agents.
+- Secure model training with compliance enforcement.
+
+## Breaking Changes
+
+- Updated SDK authentication to use `{API_KEY}` format exclusively.
+
+## Bug Fixes
+
+- Fixed initial setup issues in the dashboard.
+
+</Update>
+
+## Upcoming Roadmap
+
+<Board title="Q1 2025 Roadmap">
+  <BoardColumn title="Planned" color="0" icon="calendar">
+    <BoardCard
+      title="Advanced RL Integration"
+      description="Deep reinforcement learning for agent self-improvement"
+      icon="zap"
+      dueDate="2025-01-15"
+    />
+    <BoardCard
+      title="Multi-Model Serving"
+      description="Support for hybrid frontier and fine-tuned models"
+      icon="layers"
+    />
+  </BoardColumn>
+  <BoardColumn title="In Progress" color="1" icon="loader-circle">
+    <BoardCard
+      title="Webhook Enhancements"
+      description="Custom event triggers for enterprise workflows"
+      icon="zap"
+      author="Engineering Team"
+    />
+  </BoardColumn>
+  <BoardColumn title="Next" color="2" icon="check-circle">
+    <BoardCard
+      title="ROI Calculator API"
+      description="Programmatic access to cost savings projections"
+      createdAt="2024-12-10"
+    />
+  </BoardColumn>
+</Board>
+
+## How to Upgrade
+
+<Callout kind="info">
+  Always back up your configurations before upgrading. Test in a staging environment first.
+</Callout>
+
+<Steps>
+  <Step title="Install Latest SDK" icon="download">
+    Update to the newest version using your package manager.
+
+    <CodeGroup tabs="npm,yarn,pnpm">
+      ````bash
+      npm install @percepteye/flywheel@latest
+      ````
+
+      ````bash
+      yarn add @percepteye/flywheel@latest
+      ````
+
+      ````bash
+      pnpm add @percepteye/flywheel@latest
+      ````
+    </CodeGroup>
+  </Step>
+  <Step title="Update Configuration" icon="settings">
+    Migrate your config to the new `{API_KEY}` format.
+
+    ````javascript
+    // Old format
+    const config = { token: 'old-token' };
+
+    // New format
+    const config = {
+      apiKey: process.env.PERCEPTEYE_API_KEY, // Use YOUR_API_KEY here
+      endpoint: 'https://api.percepteye.ai/v1'
+    };
+    ````
+
+    <Callout kind="tip">
+      Set `PERCEPTEYE_API_KEY` in your environment variables.
+    </Callout>
+  </Step>
+  <Step title="Restart Services" icon="refresh-cw">
+    Redeploy your agents and verify the flywheel loop.
+
+    ````bash
+    percepteye-agent restart --all
+    ````
+  </Step>
+</Steps>
+
+## Resolved Known Issues
+
+| Issue ID | Description | Resolved In |
+|----------|-------------|-------------|
+| PERC-123 | Flywheel loop timeouts during high load | v1.3.0 |
+| PERC-456 | SDK compatibility with Node 20+ | v1.2.0 |
+| PERC-789 | Dashboard refresh errors | v1.1.0 |
+
+<Expandable title="Check Upgrade Compatibility" default-open="false">
+  Run the compatibility checker before upgrading:
+
+  ````bash
+  npx @percepteye/cli check-compat
+  ````
+
+  This scans your setup and reports any breaking changes.
+</Expandable>
